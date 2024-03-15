@@ -27,6 +27,7 @@ public class Car {
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
     @Enumerated(EnumType.STRING)
+
     private TransmissionType transmissionType;
     private int horsePower;
     private boolean availability;
