@@ -21,11 +21,15 @@ public class User {
     @GeneratedValue
     private String id;
     private String nom;
+    private String avatar;
     private String password;
     private String email;
-    private String city;
+    private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(columnDefinition = "TEXT")
+    private String details;
+    private Address address;
     private LocalDate birthDate;
 
 
