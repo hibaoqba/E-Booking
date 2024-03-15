@@ -21,15 +21,15 @@ public class Car {
     @Id
     @GeneratedValue
     private String id;
-    String brand;
-    String model;
-    int year;
-    String fuel;
-    String gear;
-    boolean availability;
-    int place;
-    int bagage;
-    int price;
+    private String brand;
+    private String model;
+    private int year;
+    private String fuel;
+    private String gear;
+    private boolean availability;
+    private int place;
+    private int bagage;
+    private int price;
 
 
 
