@@ -17,8 +17,8 @@ import java.util.List;
 @Table(name="car")
 public class Car {
     @Id
-    @GeneratedValue
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String brand;
     private String model;
     @Column(columnDefinition = "TEXT")
