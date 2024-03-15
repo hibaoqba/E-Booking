@@ -24,19 +24,11 @@ public class Car {
     @Column(columnDefinition = "TEXT")
     private String description;
     private int year;
-    @Enumerated(EnumType.STRING)
-    private FuelType fuelType;
-    @Enumerated(EnumType.STRING)
-
-    private TransmissionType transmissionType;
-    private int horsePower;
     private boolean availability;
-    private int place;
-    private int suitCases;
     private int price;
     @ElementCollection
     private List<String> images = new ArrayList<>();
-    private boolean GPS;
-    private boolean AC;
+    @Embedded
+    private CarFeatures carFeatures;
 
 }
