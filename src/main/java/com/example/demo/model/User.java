@@ -29,8 +29,7 @@ public class User {
     private Role role;
     @Column(columnDefinition = "TEXT")
     private String details;
+    @Embedded
     private Address address;
     private LocalDate birthDate;
-
-
 }
