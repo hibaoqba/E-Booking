@@ -19,7 +19,7 @@ import java.util.Arrays;
 public class SecurityConfiguration {
 
         private static final String[] SWAGGER_WHITELIST = {
-                        "/api/v1/auth/**",
+                        "/api/auth/**",
                         "/v3/api-docs/**",
                         "/v3/api-docs.yaml",
                         "/swagger-ui/**",
@@ -49,8 +49,9 @@ public class SecurityConfiguration {
                 // requests authorization
                 http.authorizeHttpRequests(authz -> authz
                                 .requestMatchers("/actuator/**").permitAll()
-                                .requestMatchers("/api/cars/**").permitAll()
-                                .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                        .requestMatchers("/api/auth/authenticate").permitAll() // Permit authentication endpoint
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .anyRequest().authenticated());
 
 
