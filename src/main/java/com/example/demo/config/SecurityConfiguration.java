@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,10 @@ import java.util.Arrays;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+
+
+        private final JwtAuthenticationFilter jwtAuthFilter;
+        private final AuthenticationProvider authenticationProvider;
 
         private static final String[] SWAGGER_WHITELIST = {
                         "/api/auth/**",
@@ -53,6 +58,13 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .anyRequest().authenticated());
+
+
+                // Session config and authentication
+                http.sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        .authenticationProvider(authenticationProvider)
+
+                        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
 
                 return http.build();
