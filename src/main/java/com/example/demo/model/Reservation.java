@@ -24,4 +24,9 @@ public class Reservation {
     private String id;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String Status;
+    private Integer days;
+    private Integer Number;
+    private Float total;
+
 }

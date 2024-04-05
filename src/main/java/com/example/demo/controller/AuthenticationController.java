@@ -4,10 +4,12 @@ import com.example.demo.auth.AuthenticationRequest;
 import com.example.demo.auth.AuthenticationResponse;
 import com.example.demo.auth.AuthenticationService;
 import com.example.demo.dto.RegisterRequest;
+import com.example.demo.service.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationController {
 
+    private final LogoutService logoutService;
     private final AuthenticationService service;
 
     @PostMapping("/register")
@@ -52,6 +55,11 @@ public class AuthenticationController {
             HttpServletRequest request,
             HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
+    }
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
+        logoutService.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+        return ResponseEntity.ok("Logged out successfully");
     }
 
 }
