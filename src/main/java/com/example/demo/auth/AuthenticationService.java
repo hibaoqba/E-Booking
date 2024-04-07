@@ -40,8 +40,6 @@ public class AuthenticationService {
 
     // Méthode pour s'enregistrer en tant qu'utilisateur
     public AuthenticationResponse register(RegisterRequest request) {
-        // builder permet d'initialiser progressivement les valeurs des champs de
-        // l'objet final.
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())

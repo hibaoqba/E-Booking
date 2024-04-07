@@ -56,6 +56,11 @@ public class SecurityConfiguration {
                                 .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/api/auth/authenticate").permitAll() // Permit authentication endpoint
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
+                        .requestMatchers("/api/cars/**").permitAll()
+
+
+
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .anyRequest().authenticated());
 
