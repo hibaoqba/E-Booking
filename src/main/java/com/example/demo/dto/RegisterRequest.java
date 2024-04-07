@@ -1,10 +1,14 @@
 package com.example.demo.dto;
 
+import com.example.demo.model.Address;
+import com.example.demo.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.example.demo.model.Role;
+
+import java.time.LocalDate;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -13,8 +17,12 @@ public class RegisterRequest {
 
     private String firstname;
     private String lastname;
+    private String avatar;
+    private String password;
     private String email;
     private String phoneNumber;
-    private String password;
-    private Role role;
+    private Role role; // Accepts string instead of Role enum
+    private String details;
+    private Address address;
+    private LocalDate birthDate;
 }
