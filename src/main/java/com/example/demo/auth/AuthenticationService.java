@@ -43,9 +43,14 @@ public class AuthenticationService {
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
-                .email(request.getEmail())
+                .avatar(request.getAvatar())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole())
+                .email(request.getEmail())
+                .phoneNumber(request.getPhoneNumber())
+                .role(request.getRole()) // Set parsed Role enum
+                .details(request.getDetails())
+                .address(request.getAddress()) // Set parsed Address object
+                .birthDate(request.getBirthDate())
                 .build();
 
         var savedUser = repository.save(user);

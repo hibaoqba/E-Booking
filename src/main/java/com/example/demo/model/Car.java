@@ -24,6 +24,7 @@ public class Car {
     @Column(columnDefinition = "TEXT")
     private String description;
     private int year;
+    private String city;
     private boolean availability;
     private int price;
     @ElementCollection

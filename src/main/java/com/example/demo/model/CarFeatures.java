@@ -5,8 +5,16 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
 
-@Embeddable
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Data
+@NoArgsConstructor
+@Getter
+@Setter
+@Embeddable
+
 public class CarFeatures {
     @Enumerated(EnumType.STRING)
     private FuelType fuelType;
