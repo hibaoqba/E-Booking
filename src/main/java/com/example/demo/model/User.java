@@ -39,7 +39,6 @@ public class User   implements UserDetails {
     private Address address;
     private LocalDate birthDate;
 
-
     @Override
     // new SimpleGrantedAuthority(...): C'est un objet qui implémente l'interface
     // GrantedAuthority et représente une autorité attribuée à un utilisateur.
