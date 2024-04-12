@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,6 @@ public class User   implements UserDetails {
     @Embedded
     private Address address;
     private LocalDate birthDate;
-
 
     @Override
     // new SimpleGrantedAuthority(...): C'est un objet qui implémente l'interface

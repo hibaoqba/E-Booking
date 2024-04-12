@@ -40,8 +40,6 @@ public class AuthenticationService {
 
     // Méthode pour s'enregistrer en tant qu'utilisateur
     public AuthenticationResponse register(RegisterRequest request) {
-        // builder permet d'initialiser progressivement les valeurs des champs de
-        // l'objet final.
         var user = User.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
@@ -57,9 +55,6 @@ public class AuthenticationService {
 
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        // Les jetons de rafraîchissement sont utilisés pour obtenir de nouveaux jetons
-        // d'accès JWT sans avoir besoin de demander à l'utilisateur de se connecter à
-        // nouveau.
         var refreshToken = jwtService.generateRefreshToken(user);
 
         saveUserToken(savedUser, jwtToken);
@@ -70,7 +65,7 @@ public class AuthenticationService {
 
     }
 
-    // Méthode pour effectuer l'authentification
+
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
