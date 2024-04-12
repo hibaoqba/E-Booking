@@ -32,4 +32,8 @@ public class Car {
     @Embedded
     private CarFeatures carFeatures;
 
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
+    private User seller;
+
 }

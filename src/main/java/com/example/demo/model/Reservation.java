@@ -18,22 +18,20 @@ public class Reservation {
 
     @Id
     @GeneratedValue
-    private String id;
+    private Long id;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String Status;
+    private String status;
     private Integer days;
     private Integer Number;
     private Float fraisSupp;
-    private Float total;
+    private Float initPrice;
+    private Float totalPrice;
     private String paymentMethod;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "car_id")
     private Car car;
-
 
 
 }
