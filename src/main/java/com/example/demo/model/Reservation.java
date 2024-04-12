@@ -28,10 +28,9 @@ public class Reservation {
     private Float initPrice;
     private Float totalPrice;
     private String paymentMethod;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="user_id")
     private User user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Car car;
-
-
 }

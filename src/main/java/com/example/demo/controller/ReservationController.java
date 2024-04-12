@@ -1,7 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Reservation;
+import com.example.demo.model.User;
+import com.example.demo.model.Car;
+
+import com.example.demo.service.CarService;
 import com.example.demo.service.ReservationService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +18,10 @@ import java.util.List;
 @RequestMapping("/api/reservations")
 public class ReservationController {
 
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private CarService carService;
     private final ReservationService reservationService;
 
     @Autowired
@@ -41,6 +50,20 @@ public class ReservationController {
     @PostMapping
     public ResponseEntity<?> createReservation(@RequestBody Reservation reservation) {
         try {
+            User user = userService.getuserById(reservation.getUser().getId().longValue()).orElse(null);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            // Retrieve car by ID
+            Car car = carService.getCarById(reservation.getCar().getId()).orElse(null);
+            if (car == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
+            }
+
+            // Set the user and car in the reservation
+            reservation.setUser(user);
+            reservation.setCar(car);
             Reservation savedReservation = reservationService.saveReservation(reservation);
             return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
         } catch (RuntimeException e) {

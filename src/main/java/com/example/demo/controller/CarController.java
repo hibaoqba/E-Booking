@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Car;
+import com.example.demo.model.User;
 import com.example.demo.service.CarService;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,10 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
+
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private CarService carService;
@@ -30,7 +36,13 @@ public class CarController {
     }
 
     @PostMapping
-    public ResponseEntity<Car> createCar(@RequestBody Car car) {
+    public ResponseEntity<?> createCar(@RequestBody Car car) {
+        User seller = userService.getuserById(car.getSeller().getId().longValue()).orElse(null);
+        if (seller == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("seller not found");
+        }
+        car.setSeller(seller);
+
         Car savedCar = carService.saveCar(car);
         return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
     }
