@@ -58,6 +58,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers("/api/cars/**").permitAll()
+                        .requestMatchers("/api/carwishes/**").permitAll()
 
 
 
