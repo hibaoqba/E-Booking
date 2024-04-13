@@ -8,6 +8,7 @@ import com.example.demo.service.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,9 +27,14 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        AuthenticationResponse response = service.register(request);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        try {
+            AuthenticationResponse response = service.register(request);
+            return ResponseEntity.ok(response);
+        } catch (DataIntegrityViolationException ex) {
+            // Catch the exception when a duplicate email is detected
+            return ResponseEntity.badRequest().body("Email already exists.");
+        }
     }
     // @PostMapping("/register")
     // public ResponseEntity<AuthenticationResponse> register(

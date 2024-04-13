@@ -19,7 +19,10 @@ public class Reservation {
     @Id
     @GeneratedValue
     private Long id;
+    private LocalDate cmndDate;
     private LocalDate startDate;
+    private String type;
+    private String titre;
     private LocalDate endDate;
     private String status;
     private Integer days;
@@ -27,6 +30,10 @@ public class Reservation {
     private Float fraisSupp;
     private Float initPrice;
     private Float totalPrice;
+    private Float remainPrice;
+    private Boolean childSeat;
+    private Boolean infantSeat;
+    private Boolean gps;
     private String paymentMethod;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")

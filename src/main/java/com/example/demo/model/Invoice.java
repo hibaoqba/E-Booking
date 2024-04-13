@@ -17,12 +17,13 @@ import java.time.LocalDate;
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
     private LocalDate createdDate;
     private double amountDue;
     private double amountPaid;
+    private String firstName;
+    private String lastName;
+
+
 }
