@@ -19,6 +19,9 @@ public class ReservationService {
         if (!isAvailable) {
             throw new RuntimeException("Car is not available for the specified period");
         }
+        long days = reservation.getStartDate().until(reservation.getEndDate()).getDays();
+
+        reservation.setDays(Math.toIntExact(days));
         return reservationRepository.save(reservation);
     }
 

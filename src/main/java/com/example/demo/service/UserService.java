@@ -17,11 +17,19 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public Optional<User> getuserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public Optional<User> getuserById(Long id) {
         return userRepository.findById(String.valueOf(id));
     }
 
     public User saveuser(User user) {
+        return userRepository.save(user);
+    }
+
+    public User updateUser(User user) {
         return userRepository.save(user);
     }
 
