@@ -36,6 +36,15 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
+    //endPoint to get reservation by userId
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Reservation>> getReservationsByUserId(@PathVariable Integer userId) {
+        List<Reservation> reservations = reservationService.getReservationsByUserId(userId);
+        return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+
+
     // Endpoint to get a reservation by ID
     @GetMapping("/{id}")
     public ResponseEntity<Reservation> getReservationById(@PathVariable Long id) {

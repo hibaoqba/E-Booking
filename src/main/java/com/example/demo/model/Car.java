@@ -26,7 +26,7 @@ public class Car {
     private int year;
     private String city;
     private boolean availability;
-    private int price;
+    private double price;
     @ElementCollection
     private List<String> images = new ArrayList<>();
     @Embedded

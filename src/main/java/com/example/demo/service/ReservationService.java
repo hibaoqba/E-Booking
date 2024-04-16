@@ -5,6 +5,7 @@ import com.example.demo.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -22,13 +23,27 @@ public class ReservationService {
         long days = reservation.getStartDate().until(reservation.getEndDate()).getDays();
 
         reservation.setDays(Math.toIntExact(days));
-        return reservationRepository.save(reservation);
+        double carPrice=reservation.getCar().getPrice();
+        double initPrice=carPrice*days;
+        reservation.setInitPrice(initPrice);
+        reservation.setCmndDate(LocalDate.now());
+        double fraisSupp=0;
+        if(reservation.getGps()) {fraisSupp+=200;}
+        if(reservation.getChildSeat()) {fraisSupp+=100;}
+        reservation.setFraisSupp(fraisSupp);
+        reservation.setTotalPrice(fraisSupp+initPrice);
+            return reservationRepository.save(reservation);
     }
 
     // Method to get all reservations
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
     }
+
+    public List<Reservation> getReservationsByUserId(Integer userId) {
+        return reservationRepository.findByUserId(userId);
+    }
+
 
     // Method to get a reservation by ID
     public Reservation getReservationById(Long id) {
