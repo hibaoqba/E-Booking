@@ -2,9 +2,10 @@ package com.example.demo.auth;
 
 
 
+import com.example.demo.dto.ChangePasswordRequest;
+import com.example.demo.exceptions.IncorrectPasswordException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -146,6 +147,20 @@ public class AuthenticationService {
 
     }
 
+    //changer le mot de passe
+    public void changePassword(String email, ChangePasswordRequest request) {
+        var user = repository.findByEmail(email)
+                .orElseThrow(); // Gérer le cas où l'utilisateur n'est pas trouvé
+
+        // Vérifier si l'ancien mot de passe correspond
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new IncorrectPasswordException(); // Créez cette exception pour gérer les cas où l'ancien mot de passe ne correspond pas
+        }
+
+        // Mettre à jour le mot de passe de l'utilisateur avec le nouveau mot de passe crypté
+        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        repository.save(user);
+    }
 
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

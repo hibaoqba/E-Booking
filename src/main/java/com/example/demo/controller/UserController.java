@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.auth.AuthenticationService;
+import com.example.demo.dto.ChangePasswordRequest;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,11 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
-
+    @PostMapping("/change_password")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
+        authenticationService.changePassword(authenticationService.getCurrentUser().getEmail(), request);
+        return ResponseEntity.ok("Password changed successfully.");
+    }
 
     @PutMapping("/{email}")
     public ResponseEntity<User> updateUser(@PathVariable String email, @RequestBody User updateUser) {
