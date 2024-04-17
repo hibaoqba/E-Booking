@@ -27,10 +27,10 @@ public class Reservation {
     private String status;
     private Integer days;
     private Integer Number;
-    private Float fraisSupp;
-    private Float initPrice;
-    private Float totalPrice;
-    private Float remainPrice;
+    private double fraisSupp;
+    private double initPrice;
+    private double totalPrice;
+    private double remainPrice;
     private Boolean childSeat;
     private Boolean infantSeat;
     private Boolean gps;
