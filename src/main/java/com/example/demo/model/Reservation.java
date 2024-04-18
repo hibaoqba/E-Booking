@@ -23,6 +23,8 @@ public class Reservation {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
+    private String titre;
+    private String type;
     private Integer days;
     private Integer number;
     private double fraisSupp;
