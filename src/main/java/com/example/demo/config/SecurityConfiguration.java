@@ -59,7 +59,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers("/api/cars/**").permitAll()
                         .requestMatchers("/api/carwishes/**").permitAll()
-
+                        .requestMatchers("/api/apt_reservations/**").permitAll()
+                        .requestMatchers("/api/apartments/**").permitAll()
                         .requestMatchers("/api/reservations/**").permitAll()
 
 

@@ -23,6 +23,8 @@ public class Apartment {
     private String titre;
     @Column(columnDefinition = "TEXT")
     private String description;
+    private String city;
+    private double price;
     @ElementCollection
     private List<String> images = new ArrayList<>();
     @Embedded
@@ -32,4 +34,6 @@ public class Apartment {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
+    @OneToMany(mappedBy = "apartment", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<AptReservation> aptReservations;
 }

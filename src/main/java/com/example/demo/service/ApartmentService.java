@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Apartment;
+import com.example.demo.model.Car;
 import com.example.demo.repository.ApartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,11 @@ public class ApartmentService {
 
     public List<Apartment> getAllApartments() {
         return apartmentRepository.findAll();
+    }
+
+
+    public List<Apartment> getSellerApartments(Integer sellerId) {
+        return apartmentRepository.findApartmentsBySellerId(sellerId);
     }
 
     public Optional<Apartment> getApartmentById(Long id) {

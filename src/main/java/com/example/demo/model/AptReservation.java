@@ -22,6 +22,8 @@ public class AptReservation {
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
+    private String titre;
+    private String type;
     private Integer days;
     private Integer noAdults;
     private Integer noChilds;
