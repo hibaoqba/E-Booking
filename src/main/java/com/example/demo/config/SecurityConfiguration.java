@@ -59,6 +59,14 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers("/api/cars/**").permitAll()
                         .requestMatchers("/api/carwishes/**").permitAll()
+<<<<<<< HEAD
+=======
+                        .requestMatchers("/api/reservations/**").permitAll()
+
+
+
+
+>>>>>>> 0a7724a87eee891611013b0017f43bba823cfc9a
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .anyRequest().authenticated());
 

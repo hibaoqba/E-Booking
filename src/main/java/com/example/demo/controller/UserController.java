@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +35,15 @@ public class UserController {
 
     @PostMapping("/change_password")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
-        authenticationService.changePassword(authenticationService.getCurrentUser().getEmail(), request);
-        return ResponseEntity.ok("Password changed successfully.");
+
+        try {
+            authenticationService.changePassword(authenticationService.getCurrentUser().getEmail(), request);
+            return ResponseEntity.ok("Password changed successfully.");
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Ancien mot de passe incorrect.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur s'est produite lors de la modification du mot de passe.");
+        }
     }
 
     @PutMapping("/{email}")
