@@ -20,7 +20,7 @@ public class ReservationService {
         if (!isAvailable) {
             throw new RuntimeException("Car is not available for the specified period");
         }
-        long days = reservation.getStartDate().until(reservation.getEndDate()).getDays();
+        long days = reservation.getStartDate().until(reservation.getEndDate()).getDays()+1;
 
         reservation.setDays(Math.toIntExact(days));
         double carPrice=reservation.getCar().getPrice();
