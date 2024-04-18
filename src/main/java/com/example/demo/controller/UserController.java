@@ -92,5 +92,27 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build(); // Handle conflict due to duplicate email
         }
     }
+    @PutMapping("role/{email}")
+    public ResponseEntity<User> updateRoleUser(@PathVariable String email, @RequestBody User updateUser) {
+        Optional<User> existingUserOptional = userService.getuserByEmail(email);
+        if (existingUserOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        User existingUser = existingUserOptional.get();
 
+        // Update the Role
+
+        if (updateUser.getRole() != null) {
+            existingUser.setRole(updateUser.getRole());
+        }
+
+        // Set other fields as needed
+
+        try {
+            User updatedUser = userService.updateUser(existingUser);
+            return ResponseEntity.ok(updatedUser);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build(); // Handle conflict due to duplicate email
+        }
+    }
 }

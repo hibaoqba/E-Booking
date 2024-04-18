@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Car;
+import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
 import com.example.demo.service.CarService;
 import com.example.demo.service.UserService;
@@ -26,6 +27,12 @@ public class CarController {
     @GetMapping
     public List<Car> getAllCars() {
         return carService.getAllCars();
+    }
+
+    @GetMapping("/seller/{sellerId}")
+    public ResponseEntity<List<Car>> getSellerCars(@PathVariable Integer sellerId) {
+        List<Car> cars = carService.getSellerCars(sellerId);
+        return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

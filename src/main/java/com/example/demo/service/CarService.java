@@ -17,6 +17,10 @@ public class CarService {
     public List<Car> getAllCars() {
         return carRepository.findAll();
     }
+    public List<Car> getSellerCars(Integer sellerId) {
+        return carRepository.findCarsBySellerId(sellerId);
+    }
+
 
     public Optional<Car> getCarById(Long id) {
         return carRepository.findById(id);

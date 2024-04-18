@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car,Long> {
+    List<Car> findCarsBySellerId(Integer sellerId);
     @Query("SELECT r.car FROM Reservation r WHERE r.car.id = :carId " +
             "AND ((r.startDate BETWEEN :startDate AND :endDate) OR " +
             "(r.endDate BETWEEN :startDate AND :endDate))")
