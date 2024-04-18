@@ -35,6 +35,7 @@ public class UserController {
 
     @PostMapping("/change_password")
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordRequest request) {
+
         try {
             authenticationService.changePassword(authenticationService.getCurrentUser().getEmail(), request);
             return ResponseEntity.ok("Password changed successfully.");
@@ -91,6 +92,5 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).build(); // Handle conflict due to duplicate email
         }
     }
-
 
 }
