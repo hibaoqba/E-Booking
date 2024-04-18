@@ -15,7 +15,7 @@ public class ReservationService {
     @Autowired
     private CarAvailabilityService carAvailabilityService;
     public Reservation saveReservation(Reservation reservation) {
-//         Check if the car is available before making the reservation
+ //        Check if the car is available before making the reservation
         boolean isAvailable = carAvailabilityService.isCarAvailable(reservation.getCar().getId(), reservation.getStartDate(), reservation.getEndDate());
         if (!isAvailable) {
             throw new RuntimeException("Car is not available for the specified period");
