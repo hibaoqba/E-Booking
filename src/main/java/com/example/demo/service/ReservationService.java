@@ -31,6 +31,9 @@ public class ReservationService {
         if(reservation.getGps()) {fraisSupp+=200;}
         if(reservation.getChildSeat()) {fraisSupp+=100;}
         reservation.setFraisSupp(fraisSupp);
+        reservation.setStatus("non payé");
+        reservation.setType("voiture");
+        reservation.setTitre(reservation.getCar().getBrand()+"-"+reservation.getCar().getModel()+" "+reservation.getCar().getYear());
         reservation.setTotalPrice(fraisSupp+initPrice);
             return reservationRepository.save(reservation);
     }
