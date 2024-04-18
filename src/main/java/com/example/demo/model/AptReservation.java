@@ -13,9 +13,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="reservation")
-public class Reservation {
-
+@Table(name="apt_reservation")
+public class AptReservation {
     @Id
     @GeneratedValue
     private Long id;
@@ -24,7 +23,8 @@ public class Reservation {
     private LocalDate endDate;
     private String status;
     private Integer days;
-    private Integer number;
+    private Integer noAdults;
+    private Integer noChilds;
     private double fraisSupp;
     private double initPrice;
     private double totalPrice;
@@ -37,5 +37,6 @@ public class Reservation {
     @JoinColumn(name="user_id")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)
-    private Car car;
+    private Apartment apartment;
+
 }

@@ -40,6 +40,11 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
+
+    public List<Reservation> getReservationsByCarSellerId(Integer sellerId) {
+        return reservationRepository.findByCarSellerId(sellerId);
+    }
+
     public List<Reservation> getReservationsByUserId(Integer userId) {
         return reservationRepository.findByUserId(userId);
     }
