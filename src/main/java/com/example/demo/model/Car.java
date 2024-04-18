@@ -35,5 +35,9 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<CarWish> carWishes;
+    @OneToMany(mappedBy = "car", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Reservation> carReservations;
 
 }

@@ -21,7 +21,7 @@ public class CarWish {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(optional = true)
     @JoinColumn(name = "car_id")
     private Car car;
 
