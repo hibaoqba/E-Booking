@@ -29,7 +29,9 @@ public class Car {
     private boolean availability;
     private double price;
     @ElementCollection
-    private List<String> images = new ArrayList<>();
+    @CollectionTable(name = "car_images", joinColumns = @JoinColumn(name = "car_id"))
+    @Column(name = "image", length = 1000000) // adjust length as per your requirement
+    private List<String> images; // Storing multiple images as base64 strings
     @Embedded
     private CarFeatures carFeatures;
 
