@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,7 @@ public class Car {
     private double longitude;
     private boolean availability;
     private double price;
-    @ElementCollection
-    private List<String> images = new ArrayList<>();
+
     @Embedded
     private CarFeatures carFeatures;
 
