@@ -9,4 +9,5 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation,Long> {
     List<Reservation> findByUserId(Integer userId);
     List<Reservation> findByCarSellerId(Integer sellerId);
+    void deleteReservationsByCarId(Long carId);
 }

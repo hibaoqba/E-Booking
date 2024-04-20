@@ -12,4 +12,5 @@ import java.util.List;
 public interface CarWishRepository extends JpaRepository<CarWish, Long> {
     List<CarWish> findByUser(User user);
     CarWish findByUserAndCar(User user, Car car);
+    void deleteCarWishByCarId(Long carId);
 }
