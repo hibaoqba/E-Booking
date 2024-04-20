@@ -24,7 +24,8 @@ public class Car {
     @Column(columnDefinition = "TEXT")
     private String description;
     private int year;
-    private String city;
+    private double latitude;
+    private double longitude;
     private boolean availability;
     private double price;
     @ElementCollection
@@ -35,7 +36,5 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
-
-
 
 }
