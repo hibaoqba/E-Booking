@@ -2,11 +2,14 @@ package com.example.demo.service;
 
 import com.example.demo.model.Reservation;
 import com.example.demo.repository.ReservationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import com.example.demo.dto.PayReservationRequest;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
+import java.util.NoSuchElementException;
 
 @Service
 public class ReservationService {
@@ -44,6 +47,32 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
+    @Transactional
+    public void changeReservationStatus(Long reservationId, String status) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(NoSuchElementException::new);
+
+        if (!isValidStatus(status)) {
+            throw new IllegalArgumentException("Invalid status");
+        }
+
+        if (!"non payé".equals(reservation.getStatus()) && "payé".equals(status)) {
+            throw new RuntimeException("Reservation is already paid");
+        }
+
+        reservation.setStatus(status);
+
+        if ("payé".equals(status)) {
+            reservation.setRemainPrice(0.0);
+        }
+
+        reservationRepository.save(reservation);
+    }
+
+    private boolean isValidStatus(String status) {
+        // Define your valid statuses here
+        return "payé".equals(status) || "non payé".equals(status) || "cancelled".equals(status);
+    }
 
     public List<Reservation> getReservationsByCarSellerId(Integer sellerId) {
         return reservationRepository.findByCarSellerId(sellerId);

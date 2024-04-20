@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.PayReservationRequest;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
 import com.example.demo.model.Car;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -43,7 +45,19 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-
+    @PostMapping("/status/{reservationId}/{status}")
+    public ResponseEntity<String> changeReservationStatus(@PathVariable Long reservationId, @PathVariable String status) {
+        try {
+            reservationService.changeReservationStatus(reservationId, status);
+            return new ResponseEntity<>("Reservation status changed successfully", HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>("Invalid status", HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/seller/{sellerId}")
     public ResponseEntity<List<Reservation>> getReservationsByCarSellerId(@PathVariable Integer sellerId) {
