@@ -35,7 +35,8 @@ public class ReservationService {
         reservation.setType("voiture");
         reservation.setTitre(reservation.getCar().getBrand()+"-"+reservation.getCar().getModel()+" "+reservation.getCar().getYear());
         reservation.setTotalPrice(fraisSupp+initPrice);
-            return reservationRepository.save(reservation);
+        reservation.setRemainPrice(reservation.getTotalPrice());
+        return reservationRepository.save(reservation);
     }
 
     // Method to get all reservations
@@ -52,6 +53,8 @@ public class ReservationService {
         return reservationRepository.findByUserId(userId);
     }
 
+    public Reservation getReservationsByCarId(Long carId) {
+        return reservationRepository.findByCarId(carId);    }
 
     // Method to get a reservation by ID
     public Reservation getReservationById(Long id) {

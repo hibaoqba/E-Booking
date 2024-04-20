@@ -16,4 +16,5 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     List<Car> findReservedCars(@Param("carId") Long carId,
                                @Param("startDate") LocalDate startDate,
                                @Param("endDate") LocalDate endDate);
+
 }

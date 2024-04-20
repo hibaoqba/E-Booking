@@ -43,10 +43,22 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
+
+
     @GetMapping("/seller/{sellerId}")
     public ResponseEntity<List<Reservation>> getReservationsByCarSellerId(@PathVariable Integer sellerId) {
         List<Reservation> reservations = reservationService.getReservationsByCarSellerId(sellerId);
         return new ResponseEntity<>(reservations, HttpStatus.OK);
+    }
+
+    @GetMapping("/car/{carId}")
+    public ResponseEntity<Reservation> getReservationsByCarId(@PathVariable Long carId) {
+        Reservation reservation = reservationService.getReservationsByCarId(carId);
+        if (reservation == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
+        return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
     // Endpoint to get a reservation by ID
