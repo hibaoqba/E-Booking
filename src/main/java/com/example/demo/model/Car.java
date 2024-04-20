@@ -29,10 +29,12 @@ public class Car {
     private double longitude;
     private boolean availability;
     private double price;
-
+    @ElementCollection
+    @CollectionTable(name = "car_images", joinColumns = @JoinColumn(name = "car_id"))
+    @Column(name = "image", length = 1000000) // adjust length as per your requirement
+    private List<String> images;
     @Embedded
     private CarFeatures carFeatures;
-
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
