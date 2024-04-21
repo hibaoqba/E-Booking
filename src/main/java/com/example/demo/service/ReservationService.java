@@ -1,7 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Payement;
 import com.example.demo.model.Reservation;
+import com.example.demo.model.Role;
+import com.example.demo.model.User;
+import com.example.demo.repository.PayementRepository;
 import com.example.demo.repository.ReservationRepository;
+import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +15,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PayementRepository payementRepository;
     @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
@@ -33,11 +43,13 @@ public class ReservationService {
         double fraisSupp=0;
         if(reservation.getGps()) {fraisSupp+=200;}
         if(reservation.getChildSeat()) {fraisSupp+=100;}
+        double fraisEtabliss=200;
+        double totalPrice = fraisSupp+initPrice+fraisEtabliss;
         reservation.setFraisSupp(fraisSupp);
         reservation.setStatus("non payé");
         reservation.setType("voiture");
         reservation.setTitre(reservation.getCar().getBrand()+"-"+reservation.getCar().getModel()+" "+reservation.getCar().getYear());
-        reservation.setTotalPrice(fraisSupp+initPrice);
+        reservation.setTotalPrice(totalPrice);
         reservation.setRemainPrice(reservation.getTotalPrice());
         return reservationRepository.save(reservation);
     }
@@ -67,6 +79,35 @@ public class ReservationService {
         }
 
         reservationRepository.save(reservation);
+    }
+
+    public void payReservation(Long reservationId){
+        changeReservationStatus(reservationId,"payé");
+        User adminUser = userRepository.findByRole(Role.valueOf("ADMIN"));
+        Reservation reservation = reservationRepository.findById(reservationId).get();
+        User sellerUser = reservation.getCar().getSeller();
+        if (adminUser == null) {
+            throw new IllegalStateException("Admin user not found");
+        }
+        if (sellerUser == null) {
+            throw new IllegalStateException("seller user not found");
+        }
+
+        double totalPrice = reservation.getTotalPrice();
+        Payement adminPayment = Payement.builder()
+                .payementDate(LocalDate.now())
+                .earningAmount(200.0)
+                .titre("Payment for admin")
+                .user(adminUser)
+                .build();
+        payementRepository.save(adminPayment);
+        Payement sellerPayment = Payement.builder()
+                .payementDate(LocalDate.now())
+                .earningAmount(totalPrice-200)
+                .titre("Payment for seller")
+                .user(sellerUser)
+                .build();
+        payementRepository.save(sellerPayment);
     }
 
     private boolean isValidStatus(String status) {
