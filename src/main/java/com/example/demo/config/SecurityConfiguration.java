@@ -62,9 +62,8 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/apt_reservations/**").permitAll()
                         .requestMatchers("/api/apartments/**").permitAll()
                         .requestMatchers("/api/reservations/**").permitAll()
-
-
-
+                        .requestMatchers("/api/invoice/**").permitAll()
+                        .requestMatchers("/api/seller/waitrequests/**").permitAll()
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .anyRequest().authenticated());
 
