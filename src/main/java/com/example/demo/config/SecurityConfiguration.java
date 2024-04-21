@@ -64,6 +64,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/reservations/**").permitAll()
                         .requestMatchers("/api/invoice/**").permitAll()
                         .requestMatchers("/api/seller/waitrequests/**").permitAll()
+                        .requestMatchers("/api/payments/**").permitAll()
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
                                 .anyRequest().authenticated());
 

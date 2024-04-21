@@ -19,6 +19,10 @@ public class PayementService {
         this.payementRepository = payementRepository;
     }
 
+    public List<Payement> getPayementsByUserId(Integer userId) {
+        return payementRepository.findByUserId(userId);
+    }
+
     public List<Payement> getAllPayements() {
         return payementRepository.findAll();
     }
