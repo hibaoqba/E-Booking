@@ -59,6 +59,20 @@ public class ReservationController {
         }
     }
 
+    @PostMapping("/pay/{reservationId}")
+    public ResponseEntity<?> payReservation(@PathVariable Long reservationId) {
+        try {
+            reservationService.payReservation(reservationId);
+            return new ResponseEntity<>("Reservation successfully paid", HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/seller/{sellerId}")
     public ResponseEntity<List<Reservation>> getReservationsByCarSellerId(@PathVariable Integer sellerId) {
         List<Reservation> reservations = reservationService.getReservationsByCarSellerId(sellerId);
