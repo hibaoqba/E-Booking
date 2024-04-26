@@ -26,14 +26,14 @@ public class Apartment {
     private String city;
     private double price;
     @ElementCollection
-    private List<String> images = new ArrayList<>();
+    @CollectionTable(name = "apartment_images", joinColumns = @JoinColumn(name = "apartment_id"))
+    @Column(name = "image", length = 1000000) // adjust length as per your requirement
+    private List<String> images; // Storing multiple images as base64 strings
     @Embedded
-    private InfoSupplim infoSupplim;
-    @ElementCollection
-    private List<String> amenities = new ArrayList<>();
+    private ApartmentFeatures apartmentFeatures;
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
-    @OneToMany(mappedBy = "apartment", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<AptReservation> aptReservations;
+    /*@OneToMany(mappedBy = "apartment", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<AptReservation> aptReservations;*/
 }

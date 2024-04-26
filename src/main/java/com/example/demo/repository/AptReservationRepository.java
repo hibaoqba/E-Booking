@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AptReservationRepository extends JpaRepository<AptReservation,Long> {
+    List<AptReservation> findByApartmentId(Long apartmentId);
     List<AptReservation> findByUserId(Integer userId);
     List<AptReservation> findByApartmentSellerId(Integer sellerId);
+    void deleteReservationsByApartmentId(Long apartmentId);
+
 }

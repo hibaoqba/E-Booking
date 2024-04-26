@@ -45,6 +45,12 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAllReservations() {
+        Long reservCount = reservationService.countAllReservations();
+        return ResponseEntity.ok(reservCount);
+    }
+
     @PostMapping("/status/{reservationId}/{status}")
     public ResponseEntity<String> changeReservationStatus(@PathVariable Long reservationId, @PathVariable String status) {
         try {
@@ -80,8 +86,8 @@ public class ReservationController {
     }
 
     @GetMapping("/car/{carId}")
-    public ResponseEntity<Reservation> getReservationsByCarId(@PathVariable Long carId) {
-        Reservation reservation = reservationService.getReservationsByCarId(carId);
+    public ResponseEntity<List<Reservation>> getReservationsByCarId(@PathVariable Long carId) {
+        List <Reservation> reservation = reservationService.getReservationsByCarId(carId);
         if (reservation == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 

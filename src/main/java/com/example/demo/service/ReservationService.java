@@ -123,13 +123,18 @@ public class ReservationService {
         return reservationRepository.findByUserId(userId);
     }
 
-    public Reservation getReservationsByCarId(Long carId) {
-        return reservationRepository.findByCarId(carId);    }
+    public List<Reservation> getReservationsByCarId(Long carId) {
+        return reservationRepository.findReservationsByCarId(carId);
+    }
 
     // Method to get a reservation by ID
     public Reservation getReservationById(Long id) {
         return reservationRepository.findById(id).orElse(null);
     }
+    public Long countAllReservations() {
+        return reservationRepository.count();
+    }
+
 
     // Method to delete a reservation by ID
     public void deleteReservation(Long id) {

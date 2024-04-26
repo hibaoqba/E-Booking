@@ -12,9 +12,15 @@ import lombok.Setter;
 @Setter
 @Embeddable
 
-public class InfoSupplim {
+public class ApartmentFeatures {
     private Integer noBed;
     private Integer noBathroom;
     private Integer square;
     private Integer minStayDays;
+    private boolean airConditioning;
+    private boolean breakfast;
+    private boolean kitchen;
+    private boolean parking;
+    private boolean pool;
+    private boolean wifiInternet;
 }

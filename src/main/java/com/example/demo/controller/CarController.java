@@ -35,6 +35,12 @@ public class CarController {
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
+    @GetMapping("/seller/{sellerId}/count")
+    public ResponseEntity<Long> countCarsBySellerId(@PathVariable Integer sellerId) {
+        Long carCount = carService.countCarsBySellerId(sellerId);
+        return ResponseEntity.ok(carCount);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id) {
         Optional<Car> car = carService.getCarById(id);
