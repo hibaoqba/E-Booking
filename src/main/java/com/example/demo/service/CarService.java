@@ -29,6 +29,9 @@ public class CarService {
         return carRepository.findCarsBySellerId(sellerId);
     }
 
+    public Long countCarsBySellerId(Integer sellerId) {
+        return carRepository.countCarsBySellerId(sellerId);
+    }
 
     public Optional<Car> getCarById(Long id) {
         return carRepository.findById(id);

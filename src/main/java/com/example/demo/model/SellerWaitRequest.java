@@ -22,4 +22,5 @@ public class SellerWaitRequest {
     private String status;
     @OneToOne
     private User user;
+
 }
