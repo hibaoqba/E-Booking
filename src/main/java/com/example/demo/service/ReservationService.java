@@ -112,7 +112,7 @@ public class ReservationService {
 
     private boolean isValidStatus(String status) {
         // Define your valid statuses here
-        return "payé".equals(status) || "non payé".equals(status) || "cancelled".equals(status);
+        return "payé".equals(status) || "non payé".equals(status) || "annulée".equals(status);
     }
 
     public List<Reservation> getReservationsByCarSellerId(Integer sellerId) {
