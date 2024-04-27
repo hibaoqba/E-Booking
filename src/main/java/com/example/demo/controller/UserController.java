@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.auth.AuthenticationService;
 import com.example.demo.dto.ChangePasswordRequest;
+import com.example.demo.model.Car;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -22,6 +24,10 @@ public class UserController {
     private UserService userService;
     @Autowired
     private AuthenticationService authenticationService;
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllusers();
+    }
 
     @GetMapping("/currentUser")
     public ResponseEntity<User> getCurrentUser() {

@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ReservationDatesResponse;
 import com.example.demo.model.Car;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
+import com.example.demo.repository.ReservationRepository;
 import com.example.demo.service.CarService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
 
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Autowired
     private UserService userService;
@@ -34,7 +39,14 @@ public class CarController {
         List<Car> cars = carService.getSellerCars(sellerId);
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
+    @GetMapping("/{carId}/reservationdates")
+    public List<ReservationDatesResponse> getCarReservations(@PathVariable Long carId) {
+        List<Reservation> reservations = reservationRepository.findReservationsByCarId(carId);
 
+        return reservations.stream()
+                .map(reservation -> new ReservationDatesResponse(reservation.getStartDate(), reservation.getEndDate()))
+                .collect(Collectors.toList());
+    }
     @GetMapping("/seller/{sellerId}/count")
     public ResponseEntity<Long> countCarsBySellerId(@PathVariable Integer sellerId) {
         Long carCount = carService.countCarsBySellerId(sellerId);
