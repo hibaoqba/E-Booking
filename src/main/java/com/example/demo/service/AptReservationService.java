@@ -118,6 +118,10 @@ public class AptReservationService {
         return aptReservationRepository.count();
     }
 
+    public Long countReservationsBySellerId(Integer sellerId){
+        return aptReservationRepository.countAptReservationsByApartmentSellerId(sellerId);
+    }
+
     private boolean isValidStatus(String status) {
         // Define your valid statuses here
         return "payé".equals(status) || "non payé".equals(status) || "cancelled".equals(status);
@@ -131,6 +135,7 @@ public class AptReservationService {
     public List<AptReservation> getAptReservationsByApartmentId(Long apartmentId) {
         return aptReservationRepository.findByApartmentId(apartmentId);
     }
+
 
     // Method to delete a AptReservation by ID
     public void deleteAptReservation(Long id) {

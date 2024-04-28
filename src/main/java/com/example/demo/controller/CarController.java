@@ -4,6 +4,7 @@ import com.example.demo.dto.ReservationDatesResponse;
 import com.example.demo.model.Car;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
+import com.example.demo.repository.CarRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.service.CarService;
 import com.example.demo.service.UserService;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/cars")
 public class CarController {
+    @Autowired
+    private CarRepository carRepository;
 
     @Autowired
     private ReservationRepository reservationRepository;
@@ -53,6 +56,12 @@ public class CarController {
         return ResponseEntity.ok(carCount);
     }
 
+    @GetMapping("/countAll")
+    public ResponseEntity<Long> countAllCars() {
+        Long carCount = carRepository.count();
+        return ResponseEntity.ok(carCount);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id) {
         Optional<Car> car = carService.getCarById(id);
@@ -71,6 +80,7 @@ public class CarController {
         Car savedCar = carService.saveCar(car);
         return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Car> updateCar(@PathVariable Long id, @RequestBody Car car) {

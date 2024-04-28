@@ -45,11 +45,18 @@ public class ReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
-    @GetMapping("/count")
+    @GetMapping("/countAll")
     public ResponseEntity<Long> countAllReservations() {
         Long reservCount = reservationService.countAllReservations();
         return ResponseEntity.ok(reservCount);
     }
+
+    @GetMapping("/seller/count/{sellerId}")
+    public ResponseEntity<Long> countAllReservations(@PathVariable Integer sellerId){
+        Long reservCountBySeller = reservationService.countReservationsBySellerId(sellerId);
+        return ResponseEntity.ok(reservCountBySeller);
+    }
+
 
     @PostMapping("/status/{reservationId}/{status}")
     public ResponseEntity<String> changeReservationStatus(@PathVariable Long reservationId, @PathVariable String status) {

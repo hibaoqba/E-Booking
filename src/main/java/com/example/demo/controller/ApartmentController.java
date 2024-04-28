@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.ReservationDatesResponse;
 import com.example.demo.model.*;
 import com.example.demo.model.Apartment;
+import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.repository.AptReservationRepository;
 import com.example.demo.service.ApartmentService;
 import com.example.demo.service.UserService;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/apartments")
 public class ApartmentController {
+    @Autowired
+    private ApartmentRepository apartmentRepository;
 
     @Autowired
     private AptReservationRepository aptReservationRepository;
@@ -38,6 +41,12 @@ public class ApartmentController {
     public ResponseEntity<List<Apartment>> getSellerApartments(@PathVariable Integer sellerId) {
         List<Apartment> apartments = apartmentService.getSellerApartments(sellerId);
         return new ResponseEntity<>(apartments, HttpStatus.OK);
+    }
+
+    @GetMapping("/countAll")
+    public ResponseEntity<Long> countAllApartments() {
+        Long apartmentCount = apartmentRepository.count();
+        return ResponseEntity.ok(apartmentCount);
     }
 
     @GetMapping("/{id}")
