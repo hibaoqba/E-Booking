@@ -39,9 +39,8 @@ public class AptReservationService {
         aptReservation.setInitPrice(initPrice);
         aptReservation.setCmndDate(LocalDate.now());
         double fraisSupp=0;
-        if(aptReservation.getClearning()) {fraisSupp+=60*days;}
-        if(aptReservation.getBreakfasts()) {fraisSupp+=80*days;}
-        if(aptReservation.getLawnGarden()) {fraisSupp+=100;}
+        if(aptReservation.getClearning()) {fraisSupp+=60;}
+        if(aptReservation.getBreakfasts()) {fraisSupp+=80;}
 
         aptReservation.setFraisSupp(fraisSupp);
         aptReservation.setStatus("non payé");
