@@ -39,8 +39,10 @@ public class AptReservationService {
         aptReservation.setInitPrice(initPrice);
         aptReservation.setCmndDate(LocalDate.now());
         double fraisSupp=0;
-        if(aptReservation.getGps()) {fraisSupp+=200;}
-        if(aptReservation.getChildSeat()) {fraisSupp+=100;}
+        if(aptReservation.getClearning()) {fraisSupp+=60*days;}
+        if(aptReservation.getBreakfasts()) {fraisSupp+=80*days;}
+        if(aptReservation.getLawnGarden()) {fraisSupp+=100;}
+
         aptReservation.setFraisSupp(fraisSupp);
         aptReservation.setStatus("non payé");
         aptReservation.setType("apartment");
