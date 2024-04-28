@@ -135,6 +135,10 @@ public class ReservationService {
         return reservationRepository.count();
     }
 
+    public Long countReservationsBySellerId(Integer sellerId) {
+        return reservationRepository.countReservationsByCarSellerId(sellerId);
+    }
+
 
     // Method to delete a reservation by ID
     public void deleteReservation(Long id) {

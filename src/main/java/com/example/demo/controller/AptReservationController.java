@@ -63,6 +63,11 @@ public class AptReservationController {
         Long reservCount = aptReservationService.countAllReservations();
         return ResponseEntity.ok(reservCount);
     }
+    @GetMapping("/seller/count/{sellerId}")
+    public ResponseEntity<Long> countAllReservations(@PathVariable Integer sellerId){
+        Long reservCountBySeller = aptReservationService.countReservationsBySellerId(sellerId);
+        return ResponseEntity.ok(reservCountBySeller);
+    }
 
     // Endpoint to get apartment reservations by userId
     @GetMapping("/user/{userId}")
@@ -121,6 +126,8 @@ public class AptReservationController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+
 
     // Endpoint to delete an apartment reservation by ID
     @DeleteMapping("/{id}")
