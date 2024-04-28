@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ReservationDatesResponse;
+import com.example.demo.model.*;
 import com.example.demo.model.Apartment;
-import com.example.demo.model.Car;
-import com.example.demo.model.User;
+import com.example.demo.repository.AptReservationRepository;
 import com.example.demo.service.ApartmentService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/apartments")
 public class ApartmentController {
+
+    @Autowired
+    private AptReservationRepository aptReservationRepository;
     @Autowired
     private UserService userService;
     private final ApartmentService apartmentService;
@@ -42,6 +47,20 @@ public class ApartmentController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/{apartmentId}/reservationdates")
+    public List<ReservationDatesResponse> getApartmentReservations(@PathVariable Long apartmentId) {
+        List<AptReservation> reservations = aptReservationRepository.findByApartmentId(apartmentId);
+
+        return reservations.stream()
+                .map(reservation -> new ReservationDatesResponse(reservation.getStartDate(), reservation.getEndDate()))
+                .collect(Collectors.toList());
+    }
+    @GetMapping("/seller/{sellerId}/count")
+    public ResponseEntity<Long> countApartmentsBySellerId(@PathVariable Integer sellerId) {
+        Long apartmentCount = apartmentService.countApartmentsBySellerId(sellerId);
+        return ResponseEntity.ok(apartmentCount);
+    }
+    
     @PostMapping
     public ResponseEntity<?> createApartment(@RequestBody Apartment apartment) {
         User seller = userService.getuserById(apartment.getSeller().getId().longValue()).orElse(null);
@@ -50,8 +69,8 @@ public class ApartmentController {
         }
         apartment.setSeller(seller);
 
-        Apartment savedCar = apartmentService.saveApartment(apartment);
-        return new ResponseEntity<>(savedCar, HttpStatus.CREATED);
+        Apartment savedApartment = apartmentService.saveApartment(apartment);
+        return new ResponseEntity<>(savedApartment, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
