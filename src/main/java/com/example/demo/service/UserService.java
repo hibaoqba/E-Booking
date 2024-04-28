@@ -32,6 +32,10 @@ public class UserService {
     public User updateUser(User user) {
         return userRepository.save(user);
     }
+    public Long countAllUsers() {
+        return userRepository.count();
+    }
+
 
     public void deleteuser(Long id) {
         userRepository.deleteById(String.valueOf(id));
