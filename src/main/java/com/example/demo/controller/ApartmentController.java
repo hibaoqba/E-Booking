@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -48,7 +49,17 @@ public class ApartmentController {
         Long apartmentCount = apartmentRepository.count();
         return ResponseEntity.ok(apartmentCount);
     }
-
+    @PutMapping("/{id}")
+    public ResponseEntity<Apartment> updateApartment(@PathVariable Long id, @RequestBody Apartment apartment) {
+        Optional<Apartment> existingApartment = apartmentService.getApartmentById(id);
+        if (existingApartment.isPresent()) {
+            apartment.setId(id);
+            Apartment updatedApartment =apartmentService.saveApartment(apartment);
+            return new ResponseEntity<>(updatedApartment, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
     @GetMapping("/{id}")
     public ResponseEntity<Apartment> getApartmentById(@PathVariable Long id) {
         return apartmentService.getApartmentById(id)

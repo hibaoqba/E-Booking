@@ -21,6 +21,8 @@ public class Apartment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String titre;
+    private double latitude;
+    private double longitude;
     @Column(columnDefinition = "TEXT")
     private String description;
     private String city;

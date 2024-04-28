@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +32,9 @@ public class Car {
     @ElementCollection
     @CollectionTable(name = "car_images", joinColumns = @JoinColumn(name = "car_id"))
     @Column(name = "image", length = 1000000) // adjust length as per your requirement
-    private List<String> images; // Storing multiple images as base64 strings
+    private List<String> images;
     @Embedded
     private CarFeatures carFeatures;
-
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User seller;
