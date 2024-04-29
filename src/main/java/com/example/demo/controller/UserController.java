@@ -52,6 +52,15 @@ public class UserController {
         }
     }
 
+    @GetMapping("/carsellers")
+    public List<User> getAllCarSellers() {
+        return userService.getAllCarSellers();
+    }
+
+    @GetMapping("/apartmentsellers")
+    public List<User> getAllApartmentSellers() {
+        return userService.getAllApartmentSellers();
+    }
 
     @GetMapping("/countAll")
     public ResponseEntity<Long> countAllUsers() {

@@ -88,7 +88,7 @@ public class AptReservationService {
 
     public void payReservation(Long reservationId){
         changeReservationStatus(reservationId,"payé");
-        User adminUser = userRepository.findByRole(Role.valueOf("ADMIN"));
+        User adminUser = (User) userRepository.findByRole(Role.valueOf("ADMIN"));
         AptReservation reservation = aptReservationRepository.findById(reservationId).get();
         User sellerUser = reservation.getApartment().getSeller();
         if (adminUser == null) {
