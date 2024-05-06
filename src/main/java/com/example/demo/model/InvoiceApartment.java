@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +14,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="invoice")
-public class Invoice {
+@Table(name="invoice_apartment")
+public class InvoiceApartment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,6 +24,4 @@ public class Invoice {
     private double amountPaid;
     private String firstName;
     private String lastName;
-
-
 }
