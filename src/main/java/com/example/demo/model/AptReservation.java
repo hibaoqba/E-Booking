@@ -31,9 +31,9 @@ public class AptReservation {
     private double initPrice;
     private double totalPrice;
     private double remainPrice;
-    private Boolean childSeat;
-    private Boolean infantSeat;
-    private Boolean gps;
+    private Boolean lawnGarden;
+    private Boolean clearning;
+    private Boolean breakfasts;
     private String paymentMethod;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_id")

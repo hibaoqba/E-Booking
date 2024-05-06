@@ -39,8 +39,9 @@ public class AptReservationService {
         aptReservation.setInitPrice(initPrice);
         aptReservation.setCmndDate(LocalDate.now());
         double fraisSupp=0;
-        if(aptReservation.getGps()) {fraisSupp+=200;}
-        if(aptReservation.getChildSeat()) {fraisSupp+=100;}
+        if(aptReservation.getClearning()) {fraisSupp+=60;}
+        if(aptReservation.getBreakfasts()) {fraisSupp+=80;}
+
         aptReservation.setFraisSupp(fraisSupp);
         aptReservation.setStatus("non payé");
         aptReservation.setType("apartment");
@@ -87,7 +88,7 @@ public class AptReservationService {
 
     public void payReservation(Long reservationId){
         changeReservationStatus(reservationId,"payé");
-        User adminUser = userRepository.findByRole(Role.valueOf("ADMIN"));
+        User adminUser = (User) userRepository.findByRole(Role.valueOf("ADMIN"));
         AptReservation reservation = aptReservationRepository.findById(reservationId).get();
         User sellerUser = reservation.getApartment().getSeller();
         if (adminUser == null) {

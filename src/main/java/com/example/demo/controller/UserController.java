@@ -52,6 +52,23 @@ public class UserController {
         }
     }
 
+    @GetMapping("/carsellers")
+    public List<User> getAllCarSellers() {
+        return userService.getAllCarSellers();
+    }
+
+    @GetMapping("/apartmentsellers")
+    public List<User> getAllApartmentSellers() {
+        return userService.getAllApartmentSellers();
+    }
+
+    @GetMapping("/countAll")
+    public ResponseEntity<Long> countAllUsers() {
+        Long userCount = userService.countAllUsers();
+        return ResponseEntity.ok(userCount);
+    }
+
+
     @PutMapping("/{email}")
     public ResponseEntity<User> updateUser(@PathVariable String email, @RequestBody User updateUser) {
         Optional<User> existingUserOptional = userService.getuserByEmail(email);

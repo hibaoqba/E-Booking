@@ -83,7 +83,7 @@ public class ReservationService {
 
     public void payReservation(Long reservationId){
         changeReservationStatus(reservationId,"payé");
-        User adminUser = userRepository.findByRole(Role.valueOf("ADMIN"));
+        User adminUser = (User) userRepository.findByRole(Role.valueOf("ADMIN"));
         Reservation reservation = reservationRepository.findById(reservationId).get();
         User sellerUser = reservation.getCar().getSeller();
         if (adminUser == null) {
