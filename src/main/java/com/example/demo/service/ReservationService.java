@@ -41,7 +41,7 @@ public class ReservationService {
         reservation.setInitPrice(initPrice);
         reservation.setCmndDate(LocalDate.now());
         double fraisSupp=0;
-        if(reservation.getGps()) {fraisSupp+=200;}
+        if(reservation.getGps()) {fraisSupp+=100;}
         if(reservation.getChildSeat()) {fraisSupp+=100;}
         double fraisEtabliss=200;
         double totalPrice = fraisSupp+initPrice+fraisEtabliss;
