@@ -71,6 +71,13 @@ public class CarController {
         return ResponseEntity.ok(carCount);
     }
 
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<Car>> searchCarsByAddress(@PathVariable String keyword) {
+        List<Car> cars = carService.searchCarsByAddress(keyword);
+        return ResponseEntity.ok(cars);
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id) {
         Optional<Car> car = carService.getCarById(id);

@@ -44,6 +44,12 @@ public class ApartmentController {
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<Apartment>> searchApartmentsByAddress(@PathVariable String keyword) {
+        List<Apartment> apartments = apartmentService.searchApartmentsByAddress(keyword);
+        return ResponseEntity.ok(apartments);
+    }
+
     @GetMapping("/city/{city}")
     public ResponseEntity<List<Apartment>> getApartmentByCity(@PathVariable String city) {
         List<Apartment> apartments = apartmentService.getApartmentsByCity(city);

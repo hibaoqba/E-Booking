@@ -36,6 +36,10 @@ public class CarService {
     }
 
 
+    public List<Car> searchCarsByAddress(String keyword) {
+        return carRepository.findByAddressContaining(keyword);
+    }
+
     public Long countCarsBySellerId(Integer sellerId) {
         return carRepository.countCarsBySellerId(sellerId);
     }

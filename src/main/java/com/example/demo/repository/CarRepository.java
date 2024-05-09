@@ -18,4 +18,8 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     List<Car> findReservedCars(@Param("carId") Long carId,
                                @Param("startDate") LocalDate startDate,
                                @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT c FROM Car c WHERE c.address LIKE %:keyword%")
+    List<Car> findByAddressContaining(@Param("keyword") String keyword);
+
 }

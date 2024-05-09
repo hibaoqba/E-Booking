@@ -22,4 +22,7 @@ public interface ApartmentRepository extends JpaRepository<Apartment,Long> {
     List<Apartment> findReservedApartments(@Param("apartmentId") Long apartmentId,
                                            @Param("startDate") LocalDate startDate,
                                            @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT a FROM Apartment a WHERE a.address LIKE %:keyword%")
+    List<Apartment> findByAddressContaining(@Param("keyword") String keyword);
 }
