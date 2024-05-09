@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car,Long> {
     Long countCarsBySellerId(Integer sellerId);
-
+    List<Car> findByCity(String city);
     List<Car> findCarsBySellerId(Integer sellerId);
     @Query("SELECT r.car FROM Reservation r WHERE r.car.id = :carId " +
             "AND ((r.startDate BETWEEN :startDate AND :endDate) OR " +

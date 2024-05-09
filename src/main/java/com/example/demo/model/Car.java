@@ -28,6 +28,8 @@ public class Car {
     private double latitude;
     private double longitude;
     private boolean availability;
+    private String address;
+    private String city;
     private double price;
     @ElementCollection
     @CollectionTable(name = "car_images", joinColumns = @JoinColumn(name = "car_id"))

@@ -44,6 +44,12 @@ public class ApartmentController {
         return new ResponseEntity<>(apartments, HttpStatus.OK);
     }
 
+    @GetMapping("/city/{city}")
+    public ResponseEntity<List<Apartment>> getApartmentByCity(@PathVariable String city) {
+        List<Apartment> apartments = apartmentService.getApartmentsByCity(city);
+        return new ResponseEntity<>(apartments, HttpStatus.OK);
+    }
+
     @GetMapping("/countAll")
     public ResponseEntity<Long> countAllApartments() {
         Long apartmentCount = apartmentRepository.count();

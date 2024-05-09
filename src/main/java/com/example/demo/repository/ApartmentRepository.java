@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ApartmentRepository extends JpaRepository<Apartment,Long> {
     Long countApartmentBySellerId(Integer sellerId);
-
+    List<Apartment> findByCity(String city);
     List<Apartment> findApartmentsBySellerId(Integer sellerId);
     @Query("SELECT ar.apartment FROM AptReservation ar " +
             "WHERE ar.apartment.id = :apartmentId " +
