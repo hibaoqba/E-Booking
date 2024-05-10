@@ -25,4 +25,19 @@ public interface ApartmentRepository extends JpaRepository<Apartment,Long> {
 
     @Query("SELECT a FROM Apartment a WHERE a.address LIKE %:keyword%")
     List<Apartment> findByAddressContaining(@Param("keyword") String keyword);
+
+
+    @Query("SELECT a FROM Apartment a " +
+            "WHERE a.address LIKE %:keyword% " +
+            "AND a.id NOT IN " +
+            "(SELECT ar.apartment.id FROM AptReservation ar " +
+            "WHERE ar.apartment.id = a.id " +
+            "AND ((ar.startDate BETWEEN :startDate AND :endDate) " +
+            "OR (ar.endDate BETWEEN :startDate AND :endDate)))")
+    List<Apartment> findAvailableApartmentsByDateAndAddress(
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
+            @Param("keyword") String keyword
+    );
+
 }

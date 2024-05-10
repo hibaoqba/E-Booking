@@ -45,6 +45,13 @@ public class PayementService {
         }
     }
 
+    public Double getTotalEarningAmountByUserId(Integer userId) {
+        List<Payement> payements = payementRepository.findByUserId(userId);
+        return payements.stream()
+                .mapToDouble(Payement::getEarningAmount)
+                .sum();
+    }
+
     public void deletePayement(Long id) {
         payementRepository.deleteById(id);
     }

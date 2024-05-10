@@ -54,6 +54,13 @@ public class ReservationService {
         return reservationRepository.save(reservation);
     }
 
+    public Long countNonPaidReservationsBySellerId(Integer sellerId) {
+        List<Reservation> sellerReservations = reservationRepository.findByCarSellerId(sellerId);
+        return sellerReservations.stream()
+                .filter(reservation -> "non payé".equals(reservation.getStatus()))
+                .count();
+    }
+
     // Method to get all reservations
     public List<Reservation> getAllReservations() {
         return reservationRepository.findAll();
@@ -80,6 +87,14 @@ public class ReservationService {
 
         reservationRepository.save(reservation);
     }
+
+    public Long countPaidReservationsBySellerId(Integer sellerId) {
+        List<Reservation> sellerReservations = reservationRepository.findByCarSellerId(sellerId);
+        return sellerReservations.stream()
+                .filter(reservation -> "payé".equals(reservation.getStatus()))
+                .count();
+    }
+
 
     public void payReservation(Long reservationId){
         changeReservationStatus(reservationId,"payé");

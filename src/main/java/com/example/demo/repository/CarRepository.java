@@ -19,6 +19,20 @@ public interface CarRepository extends JpaRepository<Car,Long> {
                                @Param("startDate") LocalDate startDate,
                                @Param("endDate") LocalDate endDate);
 
+    @Query("SELECT c FROM Car c " +
+            "WHERE c.address LIKE %:keyword% " +
+            "AND c.id NOT IN " +
+            "(SELECT r.car.id FROM Reservation r " +
+            "WHERE r.car.id = c.id " +
+            "AND ((r.startDate BETWEEN :startDate AND :endDate) " +
+            "OR (r.endDate BETWEEN :startDate AND :endDate)))")
+    List<Car> findAvailableCarsByDateAndAddress(
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate,
+            @Param("keyword") String keyword
+    );
+
+
     @Query("SELECT c FROM Car c WHERE c.address LIKE %:keyword%")
     List<Car> findByAddressContaining(@Param("keyword") String keyword);
 

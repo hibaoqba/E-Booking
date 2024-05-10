@@ -4,6 +4,7 @@ import com.example.demo.auth.AuthenticationService;
 import com.example.demo.dto.ChangePasswordRequest;
 import com.example.demo.model.Car;
 import com.example.demo.model.User;
+import com.example.demo.repository.TokenRepository;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,6 +22,8 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
+    private TokenRepository tokenRepository;
+    @Autowired
     private UserService userService;
     @Autowired
     private AuthenticationService authenticationService;
@@ -28,6 +31,13 @@ public class UserController {
     public List<User> getAllUsers() {
 
         return userService.getAllusers();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        tokenRepository.deleteByUserId(id);
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/currentUser")

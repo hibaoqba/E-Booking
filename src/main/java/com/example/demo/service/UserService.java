@@ -49,6 +49,7 @@ public class UserService {
         return userRepository.countClients();
     }
 
+
     public long countCarSellers() {
         return userRepository.countCarSellers();
     }
@@ -58,4 +59,9 @@ public class UserService {
     }
     public void deleteuser(Long id) {
         userRepository.deleteById(String.valueOf(id));
+    }
+    public void deleteUser(Integer id) {
+
+        userRepository.deleteUserById(id);
+
     }}

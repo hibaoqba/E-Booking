@@ -46,6 +46,13 @@ public class PayementController {
         return new ResponseEntity<>(createdPayement, HttpStatus.CREATED);
     }
 
+    //total earnings from paid reservs of a user, either a seller or an admin
+    @GetMapping("/user/{userId}/totalEarningAmount")
+    public ResponseEntity<Double> getTotalEarningAmountByUserId(@PathVariable Integer userId) {
+        Double totalEarningAmount = payementService.getTotalEarningAmountByUserId(userId);
+        return new ResponseEntity<>(totalEarningAmount, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<Payement> updatePayement(@PathVariable Long id, @RequestBody Payement payement) {
         Payement updatedPayement = payementService.updatePayement(id, payement);

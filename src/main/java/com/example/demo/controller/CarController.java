@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AvailableRequest;
 import com.example.demo.dto.ReservationDatesResponse;
 import com.example.demo.model.Apartment;
 import com.example.demo.model.Car;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -83,6 +85,17 @@ public class CarController {
         Optional<Car> car = carService.getCarById(id);
         return car.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+
+    // get available cars by address and date
+    @GetMapping("/availableCars")
+    public ResponseEntity<List<Car>> findAvailableCarsByDateAndAddress(@RequestBody AvailableRequest availabilityRequest) {
+        LocalDate startDate = availabilityRequest.getStartDate();
+        LocalDate endDate = availabilityRequest.getEndDate();
+        String keyword = availabilityRequest.getKeyword();
+        List<Car> cars = carService.findAvailableCarsByDateAndAddress(startDate, endDate, keyword);
+        return ResponseEntity.ok(cars);
     }
 
     @PostMapping
