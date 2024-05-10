@@ -5,6 +5,7 @@ import com.example.demo.model.Car;
 import com.example.demo.repository.ApartmentRepository;
 import com.example.demo.repository.ApartmentWishRepository;
 import com.example.demo.repository.AptReservationRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,9 +55,8 @@ public class ApartmentService {
     public Apartment saveApartment(Apartment apartment) {
         return apartmentRepository.save(apartment);
     }
-
+    @Transactional
     public void deleteApartment(Long id) {
-
         aptReservationRepository.deleteReservationsByApartmentId(id);
         apartmentWishRepository.deleteApartmentWishByApartmentId(id);
         apartmentRepository.deleteById(id);
