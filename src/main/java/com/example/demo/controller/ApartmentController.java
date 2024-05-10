@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.AvailableRequest;
 import com.example.demo.dto.ReservationDatesResponse;
 import com.example.demo.model.*;
 import com.example.demo.model.Apartment;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -110,4 +112,17 @@ public class ApartmentController {
         apartmentService.deleteApartment(id);
         return ResponseEntity.noContent().build();
     }
+
+
+    @GetMapping("/availableApartments")
+    public ResponseEntity<List<Apartment>> findAvailableApartmentsByDateAndAddress(
+            @RequestBody AvailableRequest availabilityRequest
+    ) {
+        LocalDate startDate = availabilityRequest.getStartDate();
+        LocalDate endDate = availabilityRequest.getEndDate();
+        String keyword = availabilityRequest.getKeyword();
+        List<Apartment> apartments = apartmentService.findAvailableApartmentsByDateAndAddress(startDate, endDate, keyword);
+        return ResponseEntity.ok(apartments);
+    }
+
 }
