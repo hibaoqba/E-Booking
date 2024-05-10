@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.Apartment;
 import com.example.demo.model.Car;
 import com.example.demo.repository.CarRepository;
 import com.example.demo.repository.CarWishRepository;
@@ -27,6 +28,16 @@ public class CarService {
     }
     public List<Car> getSellerCars(Integer sellerId) {
         return carRepository.findCarsBySellerId(sellerId);
+    }
+
+
+    public List<Car> getCarsByCity(String city) {
+        return carRepository.findByCity(city);
+    }
+
+
+    public List<Car> searchCarsByAddress(String keyword) {
+        return carRepository.findByAddressContaining(keyword);
     }
 
     public Long countCarsBySellerId(Integer sellerId) {

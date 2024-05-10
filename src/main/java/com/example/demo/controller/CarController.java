@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.ReservationDatesResponse;
+import com.example.demo.model.Apartment;
 import com.example.demo.model.Car;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
@@ -56,11 +57,26 @@ public class CarController {
         return ResponseEntity.ok(carCount);
     }
 
+
+    @GetMapping("/city/{city}")
+    public ResponseEntity<List<Car>> getCarsByCity(@PathVariable String city) {
+        List<Car> cars = carService.getCarsByCity(city);
+        return new ResponseEntity<>(cars, HttpStatus.OK);
+    }
+
+
     @GetMapping("/countAll")
     public ResponseEntity<Long> countAllCars() {
         Long carCount = carRepository.count();
         return ResponseEntity.ok(carCount);
     }
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<Car>> searchCarsByAddress(@PathVariable String keyword) {
+        List<Car> cars = carService.searchCarsByAddress(keyword);
+        return ResponseEntity.ok(cars);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id) {

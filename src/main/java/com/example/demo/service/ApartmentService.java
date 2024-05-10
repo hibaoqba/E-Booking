@@ -39,7 +39,13 @@ public class ApartmentService {
         return apartmentRepository.findApartmentsBySellerId(sellerId);
     }
 
-    
+    public List<Apartment> getApartmentsByCity(String city) {
+        return apartmentRepository.findByCity(city);
+    }
+
+    public List<Apartment> searchApartmentsByAddress(String keyword) {
+        return apartmentRepository.findByAddressContaining(keyword);
+    }
 
     public Optional<Apartment> getApartmentById(Long id) {
         return apartmentRepository.findById(id);

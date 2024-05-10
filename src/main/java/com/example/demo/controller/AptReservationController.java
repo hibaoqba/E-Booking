@@ -39,24 +39,43 @@ public class AptReservationController {
 
 
 
-    @PostMapping("/status/{reservationId}/{status}")
-    public ResponseEntity<String> changeReservationStatus(@PathVariable Long reservationId, @PathVariable String status) {
+    @PostMapping("/status/{aptReservationId}/{status}")
+    public ResponseEntity<String> changeReservationStatus(@PathVariable Long aptReservationId, @PathVariable String status) {
         try {
-            if ("payé".equals(status)) {
-                aptReservationService.payReservation(reservationId);
-                return new ResponseEntity<>("Reservation successfully paid", HttpStatus.OK);
-            } else {
-                aptReservationService.changeReservationStatus(reservationId, status);
-                return new ResponseEntity<>("Reservation status changed successfully", HttpStatus.OK);
-            }
+            aptReservationService.changeReservationStatus(aptReservationId, status);
+            return new ResponseEntity<>("Reservation status changed successfully", HttpStatus.OK);
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
-        } catch (IllegalArgumentException | IllegalStateException e) {
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>("Invalid status", HttpStatus.BAD_REQUEST);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
+
+    @PostMapping("/pay/{aptReservationId}")
+    public ResponseEntity<?> payReservation(@PathVariable Long aptReservationId) {
+        try {
+            aptReservationService.payReservation(aptReservationId);
+            return new ResponseEntity<>("Reservation successfully paid", HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>("Reservation not found", HttpStatus.NOT_FOUND);
+        } catch (IllegalStateException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+
+
+
+
 
     @GetMapping("/count")
     public ResponseEntity<Long> countAllReservations() {

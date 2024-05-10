@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ApartmentRepository extends JpaRepository<Apartment,Long> {
     Long countApartmentBySellerId(Integer sellerId);
-
+    List<Apartment> findByCity(String city);
     List<Apartment> findApartmentsBySellerId(Integer sellerId);
     @Query("SELECT ar.apartment FROM AptReservation ar " +
             "WHERE ar.apartment.id = :apartmentId " +
@@ -22,4 +22,7 @@ public interface ApartmentRepository extends JpaRepository<Apartment,Long> {
     List<Apartment> findReservedApartments(@Param("apartmentId") Long apartmentId,
                                            @Param("startDate") LocalDate startDate,
                                            @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT a FROM Apartment a WHERE a.address LIKE %:keyword%")
+    List<Apartment> findByAddressContaining(@Param("keyword") String keyword);
 }

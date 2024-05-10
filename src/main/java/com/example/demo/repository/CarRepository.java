@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car,Long> {
     Long countCarsBySellerId(Integer sellerId);
-
+    List<Car> findByCity(String city);
     List<Car> findCarsBySellerId(Integer sellerId);
     @Query("SELECT r.car FROM Reservation r WHERE r.car.id = :carId " +
             "AND ((r.startDate BETWEEN :startDate AND :endDate) OR " +
@@ -18,4 +18,8 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     List<Car> findReservedCars(@Param("carId") Long carId,
                                @Param("startDate") LocalDate startDate,
                                @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT c FROM Car c WHERE c.address LIKE %:keyword%")
+    List<Car> findByAddressContaining(@Param("keyword") String keyword);
+
 }

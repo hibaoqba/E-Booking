@@ -26,6 +26,7 @@ public class Apartment {
     @Column(columnDefinition = "TEXT")
     private String description;
     private String city;
+    private String address;
     private double price;
     @ElementCollection
     @CollectionTable(name = "apartment_images", joinColumns = @JoinColumn(name = "apartment_id"))
