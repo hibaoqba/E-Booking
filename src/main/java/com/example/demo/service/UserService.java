@@ -48,5 +48,5 @@ public class UserService {
 
     public void deleteUser(Integer id) {
 
-        userRepository.deleteById(String.valueOf(id));
+        userRepository.deleteUserById(id);
     }}
