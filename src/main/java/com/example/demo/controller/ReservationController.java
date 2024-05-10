@@ -72,6 +72,17 @@ public class ReservationController {
         }
     }
 
+   //count pas paye
+    @GetMapping("/{sellerId}/nonpaid/count")
+    public Long countNonPaidReservationsForSeller(@PathVariable Integer sellerId) {
+        return reservationService.countNonPaidReservationsBySellerId(sellerId);
+    }
+    // count paye
+    @GetMapping("/{sellerId}/paid/count")
+    public Long countPaidReservationsForSeller(@PathVariable Integer sellerId) {
+        return reservationService.countPaidReservationsBySellerId(sellerId);
+    }
+
     @PostMapping("/pay/{reservationId}")
     public ResponseEntity<?> payReservation(@PathVariable Long reservationId) {
         try {

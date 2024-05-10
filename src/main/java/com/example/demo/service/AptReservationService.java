@@ -50,6 +50,20 @@ public class AptReservationService {
         return aptReservationRepository.save(aptReservation);
     }
 
+    public Long countNonPaidReservationsBySellerId(Integer sellerId) {
+        List<AptReservation> sellerReservations = aptReservationRepository.findByApartmentSellerId(sellerId);
+        return sellerReservations.stream()
+                .filter(reservation -> "non payé".equals(reservation.getStatus()))
+                .count();
+    }
+
+    public Long countPaidReservationsBySellerId(Integer sellerId) {
+        List<AptReservation> sellerReservations = aptReservationRepository.findByApartmentSellerId(sellerId);
+        return sellerReservations.stream()
+                .filter(reservation -> "payé".equals(reservation.getStatus()))
+                .count();
+    }
+
 
     public List<AptReservation> getAllAptReservations() {
         return aptReservationRepository.findAll();

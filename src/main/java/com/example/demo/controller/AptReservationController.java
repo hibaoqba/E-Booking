@@ -37,6 +37,17 @@ public class AptReservationController {
         return new ResponseEntity<>(reservations, HttpStatus.OK);
     }
 
+    //count upaid
+    @GetMapping("/{sellerId}/reservations/nonpaid/count")
+    public Long countNonPaidReservationsForSeller(@PathVariable Integer sellerId) {
+        return aptReservationService.countNonPaidReservationsBySellerId(sellerId);
+    }
+
+    // count paid
+    @GetMapping("/{sellerId}/reservations/paid/count")
+    public Long countPaidReservationsForSeller(@PathVariable Integer sellerId) {
+        return aptReservationService.countPaidReservationsBySellerId(sellerId);
+    }
 
 
     @PostMapping("/status/{aptReservationId}/{status}")
@@ -53,9 +64,6 @@ public class AptReservationController {
         }
     }
 
-
-
-
     @PostMapping("/pay/{aptReservationId}")
     public ResponseEntity<?> payReservation(@PathVariable Long aptReservationId) {
         try {
@@ -69,13 +77,6 @@ public class AptReservationController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
-
-
-
-
 
     @GetMapping("/count")
     public ResponseEntity<Long> countAllReservations() {
