@@ -29,6 +29,12 @@ public class UserController {
         return userService.getAllusers();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteuser(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/currentUser")
     public ResponseEntity<User> getCurrentUser() {
         User user = authenticationService.getCurrentUser();
