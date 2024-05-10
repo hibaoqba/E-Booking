@@ -17,6 +17,8 @@ public class ApartmentFeatures {
     private Integer noBathroom;
     private Integer square;
     private Integer minStayDays;
+    private Integer noAdults;
+    private Integer noChildren;
     private boolean airConditioning;
     private boolean breakfast;
     private boolean kitchen;

@@ -45,7 +45,17 @@ public class UserService {
         return userRepository.findByRole(Role.APARTMENTSELLER);
     }
 
+    public long countClients() {
+        return userRepository.countClients();
+    }
 
+    public long countCarSellers() {
+        return userRepository.countCarSellers();
+    }
+
+    public long countApartmentSellers() {
+        return userRepository.countApartmentSellers();
+    }
     public void deleteuser(Long id) {
         userRepository.deleteById(String.valueOf(id));
     }}

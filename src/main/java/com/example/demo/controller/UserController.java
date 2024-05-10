@@ -26,6 +26,7 @@ public class UserController {
     private AuthenticationService authenticationService;
     @GetMapping
     public List<User> getAllUsers() {
+
         return userService.getAllusers();
     }
 
@@ -67,6 +68,23 @@ public class UserController {
         Long userCount = userService.countAllUsers();
         return ResponseEntity.ok(userCount);
     }
+
+    @GetMapping("/countAllClients")
+    public ResponseEntity<Long> countAllClients() {
+        Long userCount = userService.countClients();
+        return ResponseEntity.ok(userCount);
+    }
+    @GetMapping("/countAllCarSellers")
+    public ResponseEntity<Long> countAllCarSellers() {
+        Long userCount = userService.countCarSellers();
+        return ResponseEntity.ok(userCount);
+    }
+    @GetMapping("/countAllApartmentSellers")
+    public ResponseEntity<Long> countAllApartmentSellers() {
+        Long userCount = userService.countApartmentSellers();
+        return ResponseEntity.ok(userCount);
+    }
+
 
 
     @PutMapping("/{email}")
