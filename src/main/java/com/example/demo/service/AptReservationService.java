@@ -50,6 +50,34 @@ public class AptReservationService {
         return aptReservationRepository.save(aptReservation);
     }
 
+
+    public AptReservation savePaidAptReservation(AptReservation aptReservation) {
+        //        Check if the car is available before making the reservation
+        boolean isAvailable = apartmentAvailabilityService.isApartmentAvailable(aptReservation.getApartment().getId(), aptReservation.getStartDate(), aptReservation.getEndDate());
+        if (!isAvailable) {
+            throw new RuntimeException("Apartment is not available for the specified period");
+        }
+        long days = aptReservation.getStartDate().until(aptReservation.getEndDate()).getDays()+1;
+
+        aptReservation.setDays(Math.toIntExact(days));
+        double aptPrice=aptReservation.getApartment().getPrice();
+        double initPrice=aptPrice*days;
+        aptReservation.setInitPrice(initPrice);
+        aptReservation.setCmndDate(LocalDate.now());
+        double fraisSupp=0;
+        if(aptReservation.getClearning()) {fraisSupp+=60;}
+        if(aptReservation.getBreakfasts()) {fraisSupp+=80;}
+        aptReservation.setFraisSupp(fraisSupp);
+        aptReservation.setStatus("non payé");
+        aptReservation.setType("apartment");
+        aptReservation.setTitre(aptReservation.getApartment().getTitre()+"-"+aptReservation.getApartment().getCity());
+        aptReservation.setTotalPrice(fraisSupp+initPrice);
+        AptReservation savedRes= aptReservationRepository.save(aptReservation);
+        Long resId=savedRes.getId();
+        payReservation(resId);
+        return savedRes;
+    }
+
     public Long countNonPaidReservationsBySellerId(Integer sellerId) {
         List<AptReservation> sellerReservations = aptReservationRepository.findByApartmentSellerId(sellerId);
         return sellerReservations.stream()
@@ -102,7 +130,7 @@ public class AptReservationService {
 
     public void payReservation(Long reservationId){
         changeReservationStatus(reservationId,"payé");
-        User adminUser = (User) userRepository.findByRole(Role.valueOf("ADMIN"));
+        User adminUser = userRepository.findByRole(Role.valueOf("ADMIN")).get(0);
         AptReservation reservation = aptReservationRepository.findById(reservationId).get();
         User sellerUser = reservation.getApartment().getSeller();
         if (adminUser == null) {
