@@ -143,14 +143,14 @@ public class AptReservationService {
         double totalPrice = reservation.getTotalPrice();
         Payement adminPayment = Payement.builder()
                 .payementDate(LocalDate.now())
-                .earningAmount(200.0)
+                .earningAmount(50.0)
                 .titre("Payment for admin")
                 .user(adminUser)
                 .build();
         payementRepository.save(adminPayment);
         Payement sellerPayment = Payement.builder()
                 .payementDate(LocalDate.now())
-                .earningAmount(totalPrice-200)
+                .earningAmount(totalPrice-50)
                 .titre("Payment for seller")
                 .user(sellerUser)
                 .build();
