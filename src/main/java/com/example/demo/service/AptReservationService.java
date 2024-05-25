@@ -45,7 +45,7 @@ public class AptReservationService {
         aptReservation.setFraisSupp(fraisSupp);
         aptReservation.setStatus("non payé");
         aptReservation.setType("apartment");
-        aptReservation.setTitre(aptReservation.getApartment().getTitre()+"-"+aptReservation.getApartment().getCity());
+        aptReservation.setTitre(aptReservation.getApartment().getTitre());
         aptReservation.setTotalPrice(fraisSupp+initPrice);
         return aptReservationRepository.save(aptReservation);
     }
