@@ -136,8 +136,6 @@ public class AptReservationController {
             if (apartment == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Apartment not found");
             }
-
-            // Set the user and apartment in the reservation
             aptReservation.setUser(user);
             aptReservation.setApartment(apartment);
             AptReservation savedReservation = aptReservationService.saveAptReservation(aptReservation);
@@ -147,6 +145,25 @@ public class AptReservationController {
         }
     }
 
+    @PostMapping("/paid_reservation")
+    public ResponseEntity<?> createPaidAptReservation(@RequestBody AptReservation aptReservation) {
+        try {
+            User user = userService.getuserById(aptReservation.getUser().getId().longValue()).orElse(null);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+            Apartment apartment = apartmentService.getApartmentById(aptReservation.getApartment().getId()).orElse(null);
+            if (apartment == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Apartment not found");
+            }
+            aptReservation.setUser(user);
+            aptReservation.setApartment(apartment);
+            AptReservation savedReservation = aptReservationService.savePaidAptReservation(aptReservation);
+            return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
     // Endpoint to delete an apartment reservation by ID

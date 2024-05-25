@@ -148,7 +148,31 @@ public class ReservationController {
         }
     }
 
-    // Endpoint to delete a reservation by ID
+
+    @PostMapping("/paid_reservation")
+    public ResponseEntity<?> createPaidReservation(@RequestBody Reservation reservation) {
+        try {
+            User user = userService.getuserById(reservation.getUser().getId().longValue()).orElse(null);
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
+
+            // Retrieve car by ID
+            Car car = carService.getCarById(reservation.getCar().getId()).orElse(null);
+            if (car == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Car not found");
+            }
+
+            // Set the user and car in the reservation
+            reservation.setUser(user);
+            reservation.setCar(car);
+            Reservation savedReservation = reservationService.savePaidReservation(reservation);
+            return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
         reservationService.deleteReservation(id);

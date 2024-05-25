@@ -27,8 +27,8 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
     @Autowired
     private CarAvailabilityService carAvailabilityService;
+
     public Reservation saveReservation(Reservation reservation) {
- //        Check if the car is available before making the reservation
         boolean isAvailable = carAvailabilityService.isCarAvailable(reservation.getCar().getId(), reservation.getStartDate(), reservation.getEndDate());
         if (!isAvailable) {
             throw new RuntimeException("Car is not available for the specified period");
@@ -52,6 +52,39 @@ public class ReservationService {
         reservation.setTotalPrice(totalPrice);
         reservation.setRemainPrice(reservation.getTotalPrice());
         return reservationRepository.save(reservation);
+    }
+
+
+    public Reservation savePaidReservation(Reservation reservation) {
+        boolean isAvailable = carAvailabilityService.isCarAvailable(reservation.getCar().getId(), reservation.getStartDate(), reservation.getEndDate());
+        if (!isAvailable) {
+            throw new RuntimeException("Car is not available for the specified period");
+        }
+        long days = reservation.getStartDate().until(reservation.getEndDate()).getDays()+1;
+
+        reservation.setDays(Math.toIntExact(days));
+        double carPrice=reservation.getCar().getPrice();
+        double initPrice=carPrice*days;
+        reservation.setInitPrice(initPrice);
+        reservation.setCmndDate(LocalDate.now());
+        double fraisSupp=0;
+        if(reservation.getGps()) {fraisSupp+=200;}
+        if(reservation.getChildSeat()) {fraisSupp+=100;}
+        double fraisEtabliss=200;
+        double totalPrice = fraisSupp+initPrice+fraisEtabliss;
+        reservation.setFraisSupp(fraisSupp);
+        reservation.setStatus("non payé");
+
+        reservation.setType("voiture");
+        reservation.setTitre(reservation.getCar().getBrand()+"-"+reservation.getCar().getModel()+" "+reservation.getCar().getYear());
+        reservation.setTotalPrice(totalPrice);
+        reservation.setRemainPrice(reservation.getTotalPrice());
+
+
+        Reservation savedRes= reservationRepository.save(reservation);
+        Long id=savedRes.getId();
+        payReservation(id);
+        return savedRes;
     }
 
     public Long countNonPaidReservationsBySellerId(Integer sellerId) {
@@ -98,7 +131,7 @@ public class ReservationService {
 
     public void payReservation(Long reservationId){
         changeReservationStatus(reservationId,"payé");
-        User adminUser = (User) userRepository.findByRole(Role.valueOf("ADMIN"));
+        User adminUser = userRepository.findByRole(Role.valueOf("ADMIN")).get(0);
         Reservation reservation = reservationRepository.findById(reservationId).get();
         User sellerUser = reservation.getCar().getSeller();
         if (adminUser == null) {
@@ -111,14 +144,14 @@ public class ReservationService {
         double totalPrice = reservation.getTotalPrice();
         Payement adminPayment = Payement.builder()
                 .payementDate(LocalDate.now())
-                .earningAmount(200.0)
+                .earningAmount(50.0)
                 .titre("Payment for admin")
                 .user(adminUser)
                 .build();
         payementRepository.save(adminPayment);
         Payement sellerPayment = Payement.builder()
                 .payementDate(LocalDate.now())
-                .earningAmount(totalPrice-200)
+                .earningAmount(totalPrice-50)
                 .titre("Payment for seller")
                 .user(sellerUser)
                 .build();
