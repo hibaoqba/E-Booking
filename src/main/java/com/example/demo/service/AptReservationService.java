@@ -38,7 +38,7 @@ public class AptReservationService {
         double initPrice=aptPrice*days;
         aptReservation.setInitPrice(initPrice);
         aptReservation.setCmndDate(LocalDate.now());
-        double fraisSupp=0;
+        double fraisSupp=200;
         if(aptReservation.getClearning()) {fraisSupp+=60;}
         if(aptReservation.getBreakfasts()) {fraisSupp+=80;}
 
@@ -64,7 +64,7 @@ public class AptReservationService {
         double initPrice=aptPrice*days;
         aptReservation.setInitPrice(initPrice);
         aptReservation.setCmndDate(LocalDate.now());
-        double fraisSupp=0;
+        double fraisSupp=200;
         if(aptReservation.getClearning()) {fraisSupp+=60;}
         if(aptReservation.getBreakfasts()) {fraisSupp+=80;}
         aptReservation.setFraisSupp(fraisSupp);

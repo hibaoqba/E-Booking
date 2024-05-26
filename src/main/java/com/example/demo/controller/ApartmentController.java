@@ -9,6 +9,7 @@ import com.example.demo.repository.AptReservationRepository;
 import com.example.demo.service.ApartmentService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -116,11 +117,11 @@ public class ApartmentController {
 
     @GetMapping("/availableApartments")
     public ResponseEntity<List<Apartment>> findAvailableApartmentsByDateAndAddress(
-            @RequestBody AvailableRequest availabilityRequest
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam("keyword") String keyword
     ) {
-        LocalDate startDate = availabilityRequest.getStartDate();
-        LocalDate endDate = availabilityRequest.getEndDate();
-        String keyword = availabilityRequest.getKeyword();
+
         List<Apartment> apartments = apartmentService.findAvailableApartmentsByDateAndAddress(startDate, endDate, keyword);
         return ResponseEntity.ok(apartments);
     }

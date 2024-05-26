@@ -11,6 +11,7 @@ import com.example.demo.repository.ReservationRepository;
 import com.example.demo.service.CarService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -90,13 +91,15 @@ public class CarController {
 
     // get available cars by address and date
     @GetMapping("/availableCars")
-    public ResponseEntity<List<Car>> findAvailableCarsByDateAndAddress(@RequestBody AvailableRequest availabilityRequest) {
-        LocalDate startDate = availabilityRequest.getStartDate();
-        LocalDate endDate = availabilityRequest.getEndDate();
-        String keyword = availabilityRequest.getKeyword();
+    public ResponseEntity<List<Car>> findAvailableCarsByDateAndAddress(
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam("keyword") String keyword
+    ) {
         List<Car> cars = carService.findAvailableCarsByDateAndAddress(startDate, endDate, keyword);
         return ResponseEntity.ok(cars);
     }
+
 
     @PostMapping
     public ResponseEntity<?> createCar(@RequestBody Car car) {
