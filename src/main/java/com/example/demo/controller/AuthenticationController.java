@@ -5,17 +5,16 @@ import com.example.demo.auth.AuthenticationResponse;
 import com.example.demo.auth.AuthenticationService;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.service.LogoutService;
+import com.example.demo.service.ForgotPasswordService;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import com.example.demo.service.ForgotPasswordService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -43,11 +42,8 @@ public class AuthenticationController {
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request) {
-
         return ResponseEntity.ok(service.authenticate(request));
     }
-
-
 
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestBody Map<String, String> request) {
@@ -58,28 +54,6 @@ public class AuthenticationController {
         } catch (MailException | MessagingException e) {
             return "Error sending email.";
         }
-    }
-
-    @GetMapping("/reset-password")
-    public ResponseEntity<String> showResetPasswordPage(@RequestParam("token") String token) {
-        // Returning a simple HTML form as a string
-        String htmlForm = "<html>" +
-                "<head><title>Reset Password</title></head>" +
-                "<body>" +
-                "<h1>Reset Password</h1>" +
-                "<form action='/api/auth/reset-password' method='post'>" +
-                "<input type='hidden' name='token' value='" + token + "' />" +
-                "<div>" +
-                "<label for='password'>New Password:</label>" +
-                "<input type='password' id='password' name='password' required />" +
-                "</div>" +
-                "<div>" +
-                "<button type='submit'>Reset Password</button>" +
-                "</div>" +
-                "</form>" +
-                "</body>" +
-                "</html>";
-        return ResponseEntity.ok(htmlForm);
     }
 
     @PostMapping("/reset-password")
@@ -101,10 +75,10 @@ public class AuthenticationController {
             HttpServletResponse response) throws IOException {
         service.refreshToken(request, response);
     }
+
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         logoutService.logout(request, response, SecurityContextHolder.getContext().getAuthentication());
         return ResponseEntity.ok("Logged out successfully");
     }
-
 }
