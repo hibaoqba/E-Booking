@@ -47,7 +47,6 @@ public class ForgotPasswordService {
         helper.setText("<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to reset your password:</p>"
                 + "<p><a href=\"" + resetLink + "\">Reset Password</a></p>", true);
-
         mailSender.send(message);
     }
 
