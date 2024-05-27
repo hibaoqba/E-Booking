@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class ForgotPasswordService {
@@ -38,7 +39,7 @@ public class ForgotPasswordService {
     }
 
     private void sendEmail(String email, String token) throws MessagingException {
-        String resetLink = "http://localhost:8080/api/auth/reset-password?token=" + token;
+        String resetLink = "http://localhost:5173/reset-password?token=" + token;
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -47,7 +48,6 @@ public class ForgotPasswordService {
         helper.setText("<p>You have requested to reset your password.</p>"
                 + "<p>Click the link below to reset your password:</p>"
                 + "<p><a href=\"" + resetLink + "\">Reset Password</a></p>", true);
-
         mailSender.send(message);
     }
 
