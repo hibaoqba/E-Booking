@@ -34,7 +34,7 @@ public class Apartment {
     private List<String> images; // Storing multiple images as base64 strings
     @Embedded
     private ApartmentFeatures apartmentFeatures;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_id")
     private User seller;
     /*@OneToMany(mappedBy = "apartment", cascade = CascadeType.REMOVE, orphanRemoval = true)

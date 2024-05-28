@@ -35,7 +35,7 @@ public class AptReservation {
     private Boolean clearning;
     private Boolean breakfasts;
     private String paymentMethod;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="user_id")
     private User user;
     @ManyToOne(fetch = FetchType.EAGER)

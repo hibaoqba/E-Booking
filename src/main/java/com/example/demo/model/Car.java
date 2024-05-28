@@ -37,7 +37,7 @@ public class Car {
     private List<String> images;
     @Embedded
     private CarFeatures carFeatures;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "seller_id")
     private User seller;
 
