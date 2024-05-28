@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SellerWaitRequestRepository extends JpaRepository<SellerWaitRequest,Long> {
+    void deleteByUserId(Integer id);
 
 }

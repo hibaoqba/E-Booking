@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface PayementRepository extends JpaRepository<Payement,Long> {
+    void deleteByUserId(Integer id);
     List<Payement> findByUserId(Integer userId);
 }

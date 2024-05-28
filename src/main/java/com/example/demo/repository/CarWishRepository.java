@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface CarWishRepository extends JpaRepository<CarWish, Long> {
+    void deleteByUserId(Integer id);
+
     List<CarWish> findByUser(User user);
     CarWish findByUserAndCar(User user, Car car);
     void deleteCarWishByCarId(Long carId);

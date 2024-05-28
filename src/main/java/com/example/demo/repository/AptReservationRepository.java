@@ -13,6 +13,8 @@ public interface AptReservationRepository extends JpaRepository<AptReservation,L
     List<AptReservation> findByApartmentId(Long apartmentId);
     List<AptReservation> findByUserId(Integer userId);
     List<AptReservation> findByApartmentSellerId(Integer sellerId);
+    void deleteByUserId(Integer id);
+
     void deleteReservationsByApartmentId(Long apartmentId);
 
 }

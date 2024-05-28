@@ -9,5 +9,7 @@ import java.util.List;
 public interface ApartmentWishRepository extends JpaRepository<ApartmentWish,Long> {
     List<ApartmentWish> findByUser(User user);
     ApartmentWish findByUserAndApartment(User user, Apartment apartment);
+    void deleteByUserId(Integer id);
+
     void deleteApartmentWishByApartmentId(Long apartmentId);
 }
