@@ -21,6 +21,6 @@ public class Payement {
     private LocalDate payementDate;
     private Double earningAmount;
     private String titre;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     private User user;
 }

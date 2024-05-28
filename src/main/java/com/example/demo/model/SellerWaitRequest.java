@@ -20,7 +20,7 @@ public class SellerWaitRequest {
     private String role;
     private LocalDate requestDate;
     private String status;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     private User user;
 
 }
