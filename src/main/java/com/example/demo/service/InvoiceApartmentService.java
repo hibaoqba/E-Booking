@@ -25,7 +25,7 @@ public class InvoiceApartmentService {
         Font subtitleFont = new Font(Font.FontFamily.HELVETICA, 14, Font.BOLD);
         Font normalFont = new Font(Font.FontFamily.HELVETICA, 12);
 
-        String titleText = "payee".equalsIgnoreCase(aptReservation.getStatus()) ? "Facture" : "Reçu";
+        String titleText = "payé".equalsIgnoreCase(aptReservation.getStatus()) ? "Facture" : "Reçu";
         Paragraph title = new Paragraph(titleText, titleFont);
         title.setAlignment(Element.ALIGN_CENTER);
         document.add(title);
@@ -44,13 +44,13 @@ public class InvoiceApartmentService {
         addTableCell(reservationTable, "Créé:", normalFont);
         addTableCell(reservationTable, aptReservation.getCmndDate().toString(), normalFont);
 
-        addTableCell(reservationTable, "Montant " + ("payee".equalsIgnoreCase(aptReservation.getStatus()) ? "payé:" : "dû:"), normalFont);
+        addTableCell(reservationTable, "Montant " + ("payé".equalsIgnoreCase(aptReservation.getStatus()) ? "payé:" : "dû:"), normalFont);
         addTableCell(reservationTable, "د.م." + aptReservation.getTotalPrice(), normalFont);
 
         addTableCell(reservationTable, "Facturer à:", normalFont);
         addTableCell(reservationTable, aptReservation.getUser().getFirstname() + " " + aptReservation.getUser().getLastname(), normalFont);
 
-        if (!"payee".equalsIgnoreCase(aptReservation.getStatus())) {
+        if (!"payé".equalsIgnoreCase(aptReservation.getStatus())) {
             addTableCell(reservationTable, "Veuillez régler ce montant dans une agence.", normalFont);
             addTableCell(reservationTable, "", normalFont);  // empty cell to align text correctly
         }
